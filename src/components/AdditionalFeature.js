@@ -2,17 +2,18 @@ import React from "react";
 import { connect } from "react-redux";
 import { addPart } from "../actions/actions.js";
 
-const AdditionalFeature = ({ addPart, feature }) => {
-  const handleAddFeature = (e) => {
-    addPart(feature);
-  };
-
+const AdditionalFeature = (props) => {
+ 
   return (
     <li>
-      <button className="button" onClick={handleAddFeature}>
+      <button
+        className="button"
+        onClick={() => {
+          props.addPart(props.feature);
+        }}>
         Add
       </button>
-      {feature.name} (+{feature.price})
+      {props.feature.name} (+{props.feature.price})
     </li>
   );
 };
