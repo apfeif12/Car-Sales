@@ -1,4 +1,4 @@
-import { ADD_PART } from "../actions/carActions.js";
+import { ADD_PART, REMOVE_PART } from "../actions/actions.js";
 
 const initialState = {
   additionalPrice: 0,
@@ -20,12 +20,26 @@ const initialState = {
 const partReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_PART:
+      return state.car.features.includes(action.payload)
+        ? state
+        : {
+            ...state,
+            additionalPrice: state.additionalPrice + action.payload.price,
+            car: {
+              ...state.car,
+              features: [...state.car.features, action.payload],
+            },
+          };
+    case REMOVE_PART:
       return {
         ...state,
-        name: [
-          ...state.name,
-          { name: action.payload, price: action.payload },
-        ],
+        additionalPrice: state.additionalPrice - action.payload.price,
+        car: {
+          ...state.car,
+          features: state.car.features.filter(
+            (feature) => feature.id !== action.payload.id
+          ),
+        },
       };
     default:
       return state;

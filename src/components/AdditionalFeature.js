@@ -1,28 +1,27 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
+import { addPart } from "../actions/actions.js";
 
-import {addPart} from '../actions/carActions.js'
-
-const AdditionalFeature = props => {
-
-  const handleAddFeature = () => {
-    props.addPart(props.feature.id)
-
-    }
+const AdditionalFeature = ({ addPart, feature }) => {
+  const handleAddFeature = (e) => {
+    addPart(feature);
+  };
 
   return (
     <li>
-      <button className="button" onClick={handleAddFeature}>Add</button>
-      {props.feature.name} (+{props.feature.price})
+      <button className="button" onClick={handleAddFeature}>
+        Add
+      </button>
+      {feature.name} (+{feature.price})
     </li>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   console.log("additional feature state", state);
-  return({
-    features: state.car.features
-    });
-}
+  return {
+    features: state.car.features,
+  };
+};
 
-export default connect(mapStateToProps, {addPart})(AdditionalFeature);
+export default connect(mapStateToProps, { addPart })(AdditionalFeature);
